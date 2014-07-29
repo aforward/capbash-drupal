@@ -1,0 +1,6 @@
+#!/bin/bash
+mkdir -p ./nodes
+cp ./submodules/drupal/files/drupal_node ./nodes/drupal
+chmod 755 ./nodes/drupal
+
+./capbash install nginx

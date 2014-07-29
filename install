@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#-----------
+# Configurations
+#-----------
+
+DRUPAL_VERISON=${DRUPAL_VERISON-7.23}
+
+#-----------
+# Install Script
+#-----------
+
+mkdir -p /var/apps/drupal_admin/html
+cp ./submodules/drupal/files/copy /var/apps/drupal_admin/copy
+cp ./submodules/drupal/files/drupal_nginx_conf /var/apps/drupal_admin/
+
+chmod 755 /var/apps/drupal_admin/copy
+
+if [[ ! -e ./submodules/drupal/files/drupal-${DRUPAL_VERISON}.tar.gz  ]]; then
+  (cd ./submodules/drupal/files/ && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
+fi
+
+if [[ ! -e ./submodules/drupal/files/drupal-${DRUPAL_VERISON} ]]; then
+  (cd ./submodules/drupal/files/ && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
+fi
+
+if [[ ! -e /var/apps/drupal_default ]]; then
+  /var/apps/drupal_admin/copy ./submodules/drupal/files/drupal-${DRUPAL_VERISON} drupal_default
+fi
+

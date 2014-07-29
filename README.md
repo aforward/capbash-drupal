@@ -1,4 +1,44 @@
 capbash-drupal
 ==============
 
-A capbash submodule for install drupal
+Scripts for installing [drupal](https://www.drupal.org/) an open source content management platform powering millions of websites and applications.
+
+# How to Install #
+
+Install capbash first, more details at:
+https://github.com/aforward/capbash
+
+```
+git clone https://github.com/aforward/capbash YOUR_REPO_ROOT
+cd YOUR_REPO_ROOT
+./bootstrap
+```
+
+Now you can install drupal into your project
+
+```
+./capbash install drupal
+```
+
+# Configurations #
+
+The available configurations include:
+
+```
+TBD
+```
+
+
+# Deploy to Remote Server #
+
+To push the drupal script to your server, all you need if the IP or hostname of your server (e.g. 192.167.0.48) and your root password.
+
+```
+./capbash deploy <IP> drupal
+```
+
+For example,
+
+```
+./capbash deploy 127.0.0.1 drupal
+```
