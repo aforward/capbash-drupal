@@ -37,19 +37,31 @@ if ($GLOBALS["viewables"]["route"] == "show")
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    if (isset($_POST["copyDefault"]) && isset($_POST["newName"])) {
-      if (DrupalAdmin::copy_default($_POST["newName"]))
+    if (isset($_POST["copyDefault"]) && isset($_POST["newName"]) && isset($_POST["newServer"])) {
+      if (DrupalAdmin::copy_default($_POST["newName"], $_POST["newServer"]))
       {
         $GLOBALS["viewables"]['messageType'] = "info";
-        $GLOBALS["viewables"]['message'] = "Created {$_POST["newName"]}";
+        $GLOBALS["viewables"]['message'] = "Created default {$_POST["newName"]} ({$_POST["newServer"]})";
       }
       else
       {
         $GLOBALS["viewables"]['messageType'] = "error";
-        $GLOBALS["viewables"]['message'] = "Unable to create {$_POST["newName"]}";
+        $GLOBALS["viewables"]['message'] = "Unable to create {$_POST["newName"]} ({$_POST["newServer"]})";
       }
-    } elseif (isset($_POST["copySite"]) && isset($_POST["oldName"]) && isset($_POST["newName"])) {
-      DrupalAdmin.copy_site($_POST["oldName"], $_POST["newName"]);
+
+
+    } elseif (isset($_POST["copySite"]) && isset($_POST["oldName"]) && isset($_POST["newName"]) && isset($_POST["newServer"])) {
+      if (DrupalAdmin::copy_site($_POST["oldName"], $_POST["newName"], $_POST["newServer"]))
+      {
+        $GLOBALS["viewables"]['messageType'] = "info";
+        $GLOBALS["viewables"]['message'] = "Created copy of {$_POST["oldName"]} into {$_POST["newName"]} ({$_POST["newServer"]})";
+      }
+      else
+      {
+        $GLOBALS["viewables"]['messageType'] = "error";
+        $GLOBALS["viewables"]['message'] = "Unable to create copy of {$_POST["oldName"]} into {$_POST["newName"]} ({$_POST["newServer"]})";
+      }
+
     }
   }
 

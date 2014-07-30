@@ -16,7 +16,7 @@
     <div class="item twelve columns">
       <form action="index.php" method="POST">
         <div class="field">
-          <input class="input" id="inputCode" name="inputCode" type="text" placeholder="Enter your access code" />
+          <input class="input" id="inputCode" name="inputCode" type="password" placeholder="Enter your access code" />
         </div>
         <div class="medium primary btn">
           <input id="buttonLogin" name="buttonLogin" type="submit" class="button" value="Go" />

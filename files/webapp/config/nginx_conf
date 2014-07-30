@@ -1,6 +1,6 @@
 server {
   listen 80;
-  # server_name FIX_ME
+  server_name @DRUPAL_SERVER@;
   root @DRUPAL_ROOT@;
   index index.php index.html index.htm;
 

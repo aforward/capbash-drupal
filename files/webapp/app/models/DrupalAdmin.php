@@ -18,16 +18,16 @@ class DrupalAdmin
     return $all_sites;
   }
 
-  public static function copy_default($name)
+  public static function copy_default($name, $server)
   {
-    return self::do_copy(DrupalAdmin::$DEFAULT_SITE, $name);
+    return self::do_copy(DrupalAdmin::$DEFAULT_SITE, $name, $server);
   }
 
-  public static function copy_site($from_name, $to_name)
+  public static function copy_site($from_name, $to_name, $server)
   {
     if (self::is_site($from_name))
     {
-      return do_copy(self::path($from_name), $to_name);
+      return do_copy(self::path($from_name), $to_name, $server);
     }
     else
     {
@@ -56,10 +56,10 @@ class DrupalAdmin
     return DrupalAdmin::$ROOT . "/$name";
   }
 
-  private static function do_copy($from_path, $name)
+  private static function do_copy($from_path, $name, $server)
   {
     $copy = DrupalAdmin::$BIN . "/copy";
-    $call = "{$copy} {$from_path} {$name}";
+    $call = "{$copy} {$from_path} {$name} {$server}";
     echo shell_exec($call);
     return self::is_site($name);
   }

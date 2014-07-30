@@ -6,6 +6,8 @@
 
 DRUPAL_VERISON=${DRUPAL_VERISON-7.23}
 ACCESS_CODE=${ACCESS_CODE-Kk8KLHUcoNDt3Y}
+DRUPAL_ADMIN_SERVER=${DRUPAL_ADMIN_SERVER-dadmin.vm}
+
 
 #-----------
 # Install Script
@@ -31,7 +33,8 @@ fi
 
 sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php
 
-mkdir -p /etc/nginx/sites-enabled
-if [[ ! -e /etc/nginx/sites-enabled/admin_drupal ]]; then
-  cp ./submodules/drupal/files/admin_nginx_conf /etc/nginx/sites-enabled/admin_drupal
-fi
+cp ./submodules/drupal/files/admin_nginx_conf /etc/nginx/sites-enabled/admin_drupal
+sed -i s/@DRUPAL_ADMIN_SERVER@/$DRUPAL_ADMIN_SERVER/g /etc/nginx/sites-enabled/admin_drupal
+
+printf '#!/bin/bash\ntouch /tmp/nginx_reload\nchmod 777 /tmp/nginx_reload\n/var/apps/admin_drupal/bin/touchandgo /tmp/nginx_reload /var/apps/admin_drupal/bin/nginx_reload &' > /var/apps/nginx/startup.d/touchandgo_nginx_reload
+chmod 755 /var/apps/nginx/startup.d/touchandgo_nginx_reload
