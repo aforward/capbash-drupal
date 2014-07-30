@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# needs apt-get install -y inotify-tools
+
+FILE_TO_WATCH=$1
+COMMAND_TO_RUN=$2
+
+while :
+do
+  touch $FILE_TO_WATCH
+  EVENT=$(inotifywait --format '%e' $FILE_TO_WATCH)
+  [ "$EVENT" = "DELETE_SELF" ] && exit 0
+  echo "CALL: $COMMAND_TO_RUN"
+  $COMMAND_TO_RUN
+done

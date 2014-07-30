@@ -12,9 +12,16 @@ ACCESS_CODE=${ACCESS_CODE-Kk8KLHUcoNDt3Y}
 #-----------
 
 mkdir -p /var/apps/admin_drupal/
+mkdir -p /var/apps/drupal/
 
 cp -R ./submodules/drupal/files/webapp/* /var/apps/admin_drupal/
-chmod -R 755 /var/apps/admin_drupal/bin/*
+chmod -R 775 /var/apps/admin_drupal
+chmod -R 775 /var/apps/drupal
+chmod -R 775 /var/apps/admin_drupal/bin
+
+chown -R root:www-data /var/apps/admin_drupal
+chown -R root:www-data /var/apps/drupal
+
 
 if [[ ! -e /var/apps/admin_drupal/config/drupal  ]]; then
   (cd /var/apps/admin_drupal/config && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
@@ -24,6 +31,7 @@ fi
 
 sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php
 
+mkdir -p /etc/nginx/sites-enabled
 if [[ ! -e /etc/nginx/sites-enabled/admin_drupal ]]; then
   cp ./submodules/drupal/files/admin_nginx_conf /etc/nginx/sites-enabled/admin_drupal
 fi

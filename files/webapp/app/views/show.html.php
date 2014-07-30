@@ -14,11 +14,10 @@
   <?php require_view("ui/display_message") ?>
   <div class="row">
     <div class="item twelve columns">
-      WELCOME
-
-        <div class="medium primary btn">
-          <a href="/">Refresh</a>
-        </div>
+      <?php require_view('show/list', array( "sites" => $GLOBALS["viewables"]["sites"] )); ?>
+      <div class="medium primary btn">
+        <a href="/">Refresh</a>
+      </div>
 
     </div>
   </div>

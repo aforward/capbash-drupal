@@ -1,15 +1,21 @@
 #!/bin/bash
 FROM_DIR=$1
 DRUPAL_NAME=$2
-TO_DIR=/var/apps/$DRUPAL_NAME
+
+TO_DIR=/var/apps/drupal/$DRUPAL_NAME
+NGINX_CONF_FILENAME=/etc/nginx/sites-enabled/${DRUPAL_NAME}
 
 mkdir -p ${TO_DIR}
 
+echo "COPYING: cp -R ${FROM_DIR}/* ${TO_DIR}/"
 cp -R ${FROM_DIR}/* ${TO_DIR}/
+
 cp ${TO_DIR}/sites/default/default.settings.php ${TO_DIR}/sites/default/settings.php
 chmod a+w ${TO_DIR}/sites/default/settings.php
 chmod a+w ${TO_DIR}/sites/default
 
 mkdir -p /etc/nginx/sites-enabled
-cp /var/apps/admin_drupal/config/nginx_conf /etc/nginx/sites-enabled/${DRUPAL_NAME}
-sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" /etc/nginx/sites-enabled/${DRUPAL_NAME}
+cp /var/apps/admin_drupal/config/nginx_conf $NGINX_CONF_FILENAME
+sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" $NGINX_CONF_FILENAME
+
+nginx -s reload
