@@ -5,26 +5,25 @@
 #-----------
 
 DRUPAL_VERISON=${DRUPAL_VERISON-7.23}
+ACCESS_CODE=${ACCESS_CODE-Kk8KLHUcoNDt3Y}
 
 #-----------
 # Install Script
 #-----------
 
-mkdir -p /var/apps/drupal_admin/html
-cp ./submodules/drupal/files/copy /var/apps/drupal_admin/copy
-cp ./submodules/drupal/files/drupal_nginx_conf /var/apps/drupal_admin/
+mkdir -p /var/apps/admin_drupal/
 
-chmod 755 /var/apps/drupal_admin/copy
+cp -R ./submodules/drupal/files/webapp/* /var/apps/admin_drupal/
+chmod -R 755 /var/apps/admin_drupal/bin/*
 
-if [[ ! -e ./submodules/drupal/files/drupal-${DRUPAL_VERISON}.tar.gz  ]]; then
-  (cd ./submodules/drupal/files/ && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
+if [[ ! -e /var/apps/admin_drupal/config/drupal  ]]; then
+  (cd /var/apps/admin_drupal/config && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
+  (cd /var/apps/admin_drupal/config && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
+  mv /var/apps/admin_drupal/config/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/config/drupal
 fi
 
-if [[ ! -e ./submodules/drupal/files/drupal-${DRUPAL_VERISON} ]]; then
-  (cd ./submodules/drupal/files/ && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
-fi
+sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php
 
-if [[ ! -e /var/apps/drupal_default ]]; then
-  /var/apps/drupal_admin/copy ./submodules/drupal/files/drupal-${DRUPAL_VERISON} drupal_default
+if [[ ! -e /etc/nginx/sites-enabled/admin_drupal ]]; then
+  cp ./submodules/drupal/files/admin_nginx_conf /etc/nginx/sites-enabled/admin_drupal
 fi
-

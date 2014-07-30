@@ -25,7 +25,8 @@ Now you can install drupal into your project
 The available configurations include:
 
 ```
-TBD
+DRUPAL_VERISON=${DRUPAL_VERISON-7.23}
+ACCESS_CODE=${ACCESS_CODE-pp}
 ```
 
 

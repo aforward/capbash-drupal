@@ -11,5 +11,5 @@ chmod a+w ${TO_DIR}/sites/default/settings.php
 chmod a+w ${TO_DIR}/sites/default
 
 mkdir -p /etc/nginx/sites-enabled
-cp /var/apps/drupal_admin/drupal_nginx_conf /etc/nginx/sites-enabled/${DRUPAL_NAME}
+cp /var/apps/admin_drupal/config/nginx_conf /etc/nginx/sites-enabled/${DRUPAL_NAME}
 sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" /etc/nginx/sites-enabled/${DRUPAL_NAME}
