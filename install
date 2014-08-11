@@ -13,7 +13,7 @@ DRUPAL_ADMIN_SERVER=${DRUPAL_ADMIN_SERVER-dadmin.vm}
 # Install Script
 #-----------
 
-mkdir -p /var/apps/admin_drupal/
+mkdir -p /var/apps/admin_drupal/config
 mkdir -p /var/apps/drupal/
 
 cp -R ./submodules/drupal/files/webapp/* /var/apps/admin_drupal/
