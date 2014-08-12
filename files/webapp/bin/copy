@@ -12,7 +12,10 @@ mkdir -p ${TO_DIR}
 echo "COPYING: cp -R ${FROM_DIR}/* ${TO_DIR}/"
 cp -R ${FROM_DIR}/* ${TO_DIR}/
 
-cp ${TO_DIR}/sites/default/default.settings.php ${TO_DIR}/sites/default/settings.php
+if [[ ! -e ${TO_DIR}/sites/default/settings.php ]]; then
+  cp ${TO_DIR}/sites/default/default.settings.php ${TO_DIR}/sites/default/settings.php
+fi
+
 chmod a+w ${TO_DIR}/sites/default/settings.php
 chmod a+w ${TO_DIR}/sites/default
 

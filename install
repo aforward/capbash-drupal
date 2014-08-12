@@ -14,6 +14,7 @@ DRUPAL_ADMIN_SERVER=${DRUPAL_ADMIN_SERVER-dadmin.vm}
 #-----------
 
 mkdir -p /var/apps/admin_drupal/config
+mkdir -p /var/apps/admin_drupal/templates
 mkdir -p /var/apps/drupal/
 
 cp -R ./submodules/drupal/files/webapp/* /var/apps/admin_drupal/
@@ -24,10 +25,11 @@ chmod -R 775 /var/apps/admin_drupal/bin
 chown -R root:www-data /var/apps/admin_drupal
 chown -R root:www-data /var/apps/drupal
 
-if [[ ! -e /var/apps/admin_drupal/config/drupal  ]]; then
-  (cd /var/apps/admin_drupal/config && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
-  (cd /var/apps/admin_drupal/config && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
-  mv /var/apps/admin_drupal/config/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/config/drupal
+if [[ ! -e /var/apps/admin_drupal/templates/default  ]]; then
+  mkdir -p /var/apps/admin_drupal/templates/default
+  (cd /var/apps/admin_drupal/templates/default && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
+  (cd /var/apps/admin_drupal/templates/default && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
+  mv /var/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/templates/default/drupalc
 fi
 
 sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php

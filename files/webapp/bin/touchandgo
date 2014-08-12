@@ -11,6 +11,6 @@ do
 
   EVENT=$(inotifywait --format '%e' $FILE_TO_WATCH)
   [ "$EVENT" = "DELETE_SELF" ] && exit 1
-  echo "CALL: $COMMAND_TO_RUN"
+  echo "TOUCH AND GO CALL: $COMMAND_TO_RUN"
   $COMMAND_TO_RUN
 done

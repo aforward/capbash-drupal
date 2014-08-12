@@ -3,7 +3,7 @@
 class DrupalAdmin
 {
 
-  private static $DEFAULT_SITE = "/var/apps/admin_drupal/config/drupal";
+  private static $TEMPLATE_DIR = "/var/apps/admin_drupal/templates";
   private static $BIN = "/var/apps/admin_drupal/bin";
   private static $ROOT = '/var/apps/drupal';
 
@@ -11,16 +11,23 @@ class DrupalAdmin
   // API
   //---------------
 
+  public static function ls_templates()
+  {
+    $all_templates = scandir(DrupalAdmin::$TEMPLATE_DIR);
+    $all_templates = array_values(array_filter($all_templates, function($name) { return self::is_template($name); }));
+    return $all_templates;
+  }
+
   public static function ls()
   {
     $all_sites = scandir(DrupalAdmin::$ROOT);
-    $all_sites = array_filter($all_sites, function($name) { return self::is_site($name); });
+    $all_sites = array_values(array_filter($all_sites, function($name) { return self::is_site($name); }));
     return $all_sites;
   }
 
-  public static function copy_default($name, $server)
+  public static function copy_template($template, $name, $server)
   {
-    return self::do_copy(DrupalAdmin::$DEFAULT_SITE, $name, $server);
+    return self::do_copy(self::template($template), $name, $server);
   }
 
   public static function copy_site($from_name, $to_name, $server)
@@ -100,6 +107,23 @@ class DrupalAdmin
     {
       return is_dir(self::path($name));
     }
+  }
+
+  public static function is_template($name)
+  {
+    if ($name == "." || $name == "..")
+    {
+      return false;
+    }
+    else
+    {
+      return is_dir(self::template($name));
+    }
+  }
+
+  public static function template($name)
+  {
+    return DrupalAdmin::$TEMPLATE_DIR . "/$name/drupal";
   }
 
   public static function path($name)
