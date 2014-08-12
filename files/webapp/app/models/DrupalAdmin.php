@@ -35,6 +35,57 @@ class DrupalAdmin
     }
   }
 
+  public static function is_enabled($name)
+  {
+    if (self::is_site($name))
+    {
+      return file_exists("/etc/nginx/sites-enabled/{$name}");
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  public static function enable_site($name)
+  {
+    $enable = DrupalAdmin::$BIN . "/enable_site";
+    $call = "{$enable} {$name}";
+    shell_exec($call);
+  }
+
+  public static function disable_site($name)
+  {
+    $disable = DrupalAdmin::$BIN . "/disable_site";
+    $call = "{$disable} {$name}";
+    shell_exec($call);
+  }
+
+  public static function site_url_file($name)
+  {
+    if (self::is_site($name))
+    {
+      return self::path($name) . "/.url";
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public static function site_url_href($name)
+  {
+    $filename = self::site_url_file($name);
+    if ($filename != null && file_exists($filename))
+    {
+      return file_get_contents($filename);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
   //---------------
   // HELPERS
   //---------------
@@ -60,7 +111,7 @@ class DrupalAdmin
   {
     $copy = DrupalAdmin::$BIN . "/copy";
     $call = "{$copy} {$from_path} {$name} {$server}";
-    echo shell_exec($call);
+    shell_exec($call);
     return self::is_site($name);
   }
 

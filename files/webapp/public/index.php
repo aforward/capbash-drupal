@@ -62,7 +62,20 @@ if ($GLOBALS["viewables"]["route"] == "show")
         $GLOBALS["viewables"]['message'] = "Unable to create copy of {$_POST["oldName"]} into {$_POST["newName"]} ({$_POST["newServer"]})";
       }
 
+
+    } elseif (isset($_POST["enableSite"]) && isset($_POST["name"])) {
+      DrupalAdmin::enable_site($_POST["name"]);
+      $GLOBALS["viewables"]['messageType'] = "info";
+      $GLOBALS["viewables"]['message'] = "Enabled {$_POST["name"]}";
+
+
+    } elseif (isset($_POST["disableSite"]) && isset($_POST["name"])) {
+      DrupalAdmin::disable_site($_POST["name"]);
+      $GLOBALS["viewables"]['messageType'] = "info";
+      $GLOBALS["viewables"]['message'] = "Disabled {$_POST["name"]}";
+
     }
+
   }
 
   $GLOBALS["viewables"]["sites"] = DrupalAdmin::ls();

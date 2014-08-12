@@ -2,6 +2,7 @@
 FROM_DIR=$1
 DRUPAL_NAME=$2
 DRUPAL_SERVER=$3
+DRUPAL_LOGS=/var/log/nginx
 
 TO_DIR=/var/apps/drupal/$DRUPAL_NAME
 NGINX_CONF_FILENAME=/etc/nginx/sites-enabled/${DRUPAL_NAME}
@@ -18,5 +19,9 @@ chmod a+w ${TO_DIR}/sites/default
 cp /var/apps/admin_drupal/config/nginx_conf $NGINX_CONF_FILENAME
 sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" $NGINX_CONF_FILENAME
 sed -i "s|@DRUPAL_SERVER@|$DRUPAL_SERVER|g" $NGINX_CONF_FILENAME
+sed -i "s|@DRUPAL_NAME@|$DRUPAL_NAME|g" $NGINX_CONF_FILENAME
+sed -i "s|@DRUPAL_LOGS@|$DRUPAL_LOGS|g" $NGINX_CONF_FILENAME
+
+echo "$DRUPAL_SERVER" > "$TO_DIR/.url"
 
 touch /tmp/nginx_reload

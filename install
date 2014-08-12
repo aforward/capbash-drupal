@@ -24,7 +24,6 @@ chmod -R 775 /var/apps/admin_drupal/bin
 chown -R root:www-data /var/apps/admin_drupal
 chown -R root:www-data /var/apps/drupal
 
-
 if [[ ! -e /var/apps/admin_drupal/config/drupal  ]]; then
   (cd /var/apps/admin_drupal/config && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
   (cd /var/apps/admin_drupal/config && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)

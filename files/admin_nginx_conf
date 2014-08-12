@@ -4,6 +4,9 @@ server {
   root /var/apps/admin_drupal/public;
   index index.php index.html index.htm;
 
+  access_log /var/log/nginx/admin_drupal_nginx.access.log;
+  error_log /var/log/nginx/admin_drupal_nginx.error.log;
+
   location / {
     try_files $uri $uri/ /index.php?q=$uri&$args;
   }

@@ -1,4 +1,5 @@
 <form action="index.php" method="POST">
+  <h3>Add New Site</h3>
   <div class="field">
     <input class="input" name="copyDefault" type="hidden" value="copyDefault" />
     <input class="input" name="newName"  placeholder="Name Your Site (No Spaces)" />

@@ -7480,3 +7480,10 @@ a:hover {
   padding: 20px 0 20px 0;
   color: #4a4d50;
 }
+
+/* line 43, ../../../app/sass/_custom.sass */
+.drupal-site {
+  padding: 20px;
+  border: 1px solid black;
+  margin: 5px;
+}

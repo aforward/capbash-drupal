@@ -1,0 +1,11 @@
+#!/bin/bash
+DRUPAL_NAME=$1
+
+TO_DIR=/var/apps/drupal/$DRUPAL_NAME
+ENABLED_FILENAME=/etc/nginx/sites-enabled/${DRUPAL_NAME}
+AVAILABLE_FILENAME=/etc/nginx/sites-available/${DRUPAL_NAME}
+
+if [[ ! -e $ENABLED_FILENAME ]]; then
+  cp $AVAILABLE_FILENAME $ENABLED_FILENAME
+  touch /tmp/nginx_reload
+fi
