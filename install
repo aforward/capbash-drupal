@@ -29,7 +29,7 @@ if [[ ! -e /var/apps/admin_drupal/templates/default  ]]; then
   mkdir -p /var/apps/admin_drupal/templates/default
   (cd /var/apps/admin_drupal/templates/default && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
   (cd /var/apps/admin_drupal/templates/default && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
-  mv /var/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/templates/default/drupalc
+  mv /var/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/templates/default/drupal
 fi
 
 sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php
