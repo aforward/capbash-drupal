@@ -13,29 +13,29 @@ DRUPAL_ADMIN_SERVER=${DRUPAL_ADMIN_SERVER-dadmin.vm}
 # Install Script
 #-----------
 
-mkdir -p /var/apps/admin_drupal/config
-mkdir -p /var/apps/admin_drupal/templates
-mkdir -p /var/apps/drupal/
+mkdir -p /var/local/apps/admin_drupal/config
+mkdir -p /var/local/apps/admin_drupal/templates
+mkdir -p /var/local/apps/drupal/
 
-cp -R ./submodules/drupal/files/webapp/* /var/apps/admin_drupal/
-chmod -R 775 /var/apps/admin_drupal
-chmod -R 775 /var/apps/drupal
-chmod -R 775 /var/apps/admin_drupal/bin
+cp -R ./submodules/drupal/files/webapp/* /var/local/apps/admin_drupal/
+chmod -R 775 /var/local/apps/admin_drupal
+chmod -R 775 /var/local/apps/drupal
+chmod -R 775 /var/local/apps/admin_drupal/bin
 
-chown -R root:www-data /var/apps/admin_drupal
-chown -R root:www-data /var/apps/drupal
+chown -R root:www-data /var/local/apps/admin_drupal
+chown -R root:www-data /var/local/apps/drupal
 
-if [[ ! -e /var/apps/admin_drupal/templates/default  ]]; then
-  mkdir -p /var/apps/admin_drupal/templates/default
-  (cd /var/apps/admin_drupal/templates/default && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
-  (cd /var/apps/admin_drupal/templates/default && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
-  mv /var/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/apps/admin_drupal/templates/default/drupal
+if [[ ! -e /var/local/apps/admin_drupal/templates/default  ]]; then
+  mkdir -p /var/local/apps/admin_drupal/templates/default
+  (cd /var/local/apps/admin_drupal/templates/default && wget http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERISON}.tar.gz)
+  (cd /var/local/apps/admin_drupal/templates/default && tar zxfv drupal-${DRUPAL_VERISON}.tar.gz)
+  mv /var/local/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/local/apps/admin_drupal/templates/default/drupal
 fi
 
-sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/apps/admin_drupal/app/models/AccessCode.php
+sed -i s/@ACCESS_CODE@/$ACCESS_CODE/g /var/local/apps/admin_drupal/app/models/AccessCode.php
 
 cp ./submodules/drupal/files/admin_nginx_conf /etc/nginx/sites-enabled/admin_drupal
 sed -i s/@DRUPAL_ADMIN_SERVER@/$DRUPAL_ADMIN_SERVER/g /etc/nginx/sites-enabled/admin_drupal
 
-printf '#!/bin/bash\ntouch /tmp/nginx_reload\nchmod 777 /tmp/nginx_reload\n/var/apps/admin_drupal/bin/touchandgo /tmp/nginx_reload /var/apps/admin_drupal/bin/nginx_reload &' > /var/apps/nginx/startup.d/touchandgo_nginx_reload
-chmod 755 /var/apps/nginx/startup.d/touchandgo_nginx_reload
+printf '#!/bin/bash\ntouch /tmp/nginx_reload\nchmod 777 /tmp/nginx_reload\n/var/local/apps/admin_drupal/bin/touchandgo /tmp/nginx_reload /var/local/apps/admin_drupal/bin/nginx_reload &' > /var/local/nginx/startup.d/touchandgo_nginx_reload
+chmod 755 /var/local/nginx/startup.d/touchandgo_nginx_reload

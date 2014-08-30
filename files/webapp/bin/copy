@@ -4,7 +4,7 @@ DRUPAL_NAME=$2
 DRUPAL_SERVER=$3
 DRUPAL_LOGS=/var/log/nginx
 
-TO_DIR=/var/apps/drupal/$DRUPAL_NAME
+TO_DIR=/var/local/apps/drupal/$DRUPAL_NAME
 NGINX_CONF_FILENAME=/etc/nginx/sites-enabled/${DRUPAL_NAME}
 
 mkdir -p ${TO_DIR}
@@ -19,7 +19,7 @@ fi
 chmod a+w ${TO_DIR}/sites/default/settings.php
 chmod a+w ${TO_DIR}/sites/default
 
-cp /var/apps/admin_drupal/config/nginx_conf $NGINX_CONF_FILENAME
+cp /var/local/apps/admin_drupal/config/nginx_conf $NGINX_CONF_FILENAME
 sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" $NGINX_CONF_FILENAME
 sed -i "s|@DRUPAL_SERVER@|$DRUPAL_SERVER|g" $NGINX_CONF_FILENAME
 sed -i "s|@DRUPAL_NAME@|$DRUPAL_NAME|g" $NGINX_CONF_FILENAME

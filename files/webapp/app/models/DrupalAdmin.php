@@ -3,9 +3,9 @@
 class DrupalAdmin
 {
 
-  private static $TEMPLATE_DIR = "/var/apps/admin_drupal/templates";
-  private static $BIN = "/var/apps/admin_drupal/bin";
-  private static $ROOT = '/var/apps/drupal';
+  private static $TEMPLATE_DIR = "/var/local/apps/admin_drupal/templates";
+  private static $BIN = "/var/local/apps/admin_drupal/bin";
+  private static $ROOT = '/var/local/apps/drupal';
 
   //---------------
   // API
