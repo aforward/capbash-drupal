@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+  ServerAdmin @DRUPAL_ADMIN_SERVER@
+
+  DocumentRoot /var/apps/admin_drupal/public
+
+  <Directory /var/apps/admin_drupal/public>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Require all granted
+  </Directory>
+
+  ErrorLog ${APACHE_LOG_DIR}/admin_drupal_apache.access.log
+  CustomLog ${APACHE_LOG_DIR}/admin_drupal_apache.access.log combined
+
+</VirtualHost>
