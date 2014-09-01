@@ -10,6 +10,7 @@ DRUPAL_ADMIN_SERVER=${DRUPAL_ADMIN_SERVER-dadmin.vm}
 DRUPAL_SERVER=${DRUPAL_SERVER-apache}
 
 APACHE_LOG_DIR=${APACHE_LOG_DIR-/var/log/apache2}
+NGINX_LOG_DIR=${NGINX_LOG_DIR-/var/log/nginx}
 
 #-----------
 # Install Script
@@ -34,8 +35,14 @@ if [[ ! -e /var/local/apps/admin_drupal/templates/default  ]]; then
   mv /var/local/apps/admin_drupal/templates/default/drupal-${DRUPAL_VERISON} /var/local/apps/admin_drupal/templates/default/drupal
 fi
 
-sed -i s/@ACCESS_CODE@/${ACCESS_CODE}/g /var/apps/admin_drupal/app/models/AccessCode.php
-cp ./submodules/drupal/files/admin_${DRUPAL_SERVER}_conf /etc/${DRUPAL_SERVER}/sites-enabled/admin_drupal
-printf '#!/bin/bash\ntouch /tmp/${DRUPAL_SERVER}_reload\nchmod 777 /tmp/${DRUPAL_SERVER}_reload\n/var/apps/admin_drupal/bin/touchandgo /tmp/${DRUPAL_SERVER}_reload /var/apps/admin_drupal/bin/${DRUPAL_SERVER}_reload &' > /var/apps/${DRUPAL_SERVER}/startup.d/touchandgo_${DRUPAL_SERVER}_reload
-chmod 755 /var/apps/${DRUPAL_SERVER}/startup.d/touchandgo_${DRUPAL_SERVER}_reload
-sed -i s/@DRUPAL_ADMIN_SERVER@/$DRUPAL_ADMIN_SERVER/g /etc/${DRUPAL_SERVER}/sites-enabled/admin_drupal
+DRUPAL_CONF=/etc/${DRUPAL_SERVER}/sites-enabled/admin_drupal.conf
+if [[ "$DRUPAL_SERVER" = "apache" ]]; then
+  DRUPAL_CONF=/etc/apache2/sites-enabled/admin_drupal.conf
+fi
+
+sed -i s/@ACCESS_CODE@/${ACCESS_CODE}/g /var/local/apps/admin_drupal/app/models/AccessCode.php
+cp ./submodules/drupal/files/admin_${DRUPAL_SERVER}_conf $DRUPAL_CONF
+
+sed -i "s|@DRUPAL_ADMIN_SERVER@|$DRUPAL_ADMIN_SERVER|g" $DRUPAL_CONF
+sed -i "s|@APACHE_LOG_DIR@|$APACHE_LOG_DIR|g" $DRUPAL_CONF
+sed -i "s|@NGINX_LOG_DIR@|$NGINX_LOG_DIR|g" $DRUPAL_CONF
