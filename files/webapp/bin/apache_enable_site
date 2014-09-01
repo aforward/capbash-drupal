@@ -1,0 +1,11 @@
+#!/bin/bash
+DRUPAL_NAME=$1
+
+TO_DIR=/var/local/apps/drupal/$DRUPAL_NAME
+ENABLED_FILENAME=/etc/apache2/sites-enabled/${DRUPAL_NAME}.conf
+AVAILABLE_FILENAME=/etc/apache2/sites-available/${DRUPAL_NAME}.conf
+
+if [[ ! -e $ENABLED_FILENAME ]]; then
+  cp $AVAILABLE_FILENAME $ENABLED_FILENAME
+  touch /data/apache_reload
+fi

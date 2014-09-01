@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+  ServerName @DRUPAL_SERVER@
+  DocumentRoot @DRUPAL_ROOT@
+
+  <Directory @DRUPAL_ROOT@>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Require all granted
+  </Directory>
+
+  ErrorLog @DRUPAL_LOGS@/@DRUPAL_NAME@_apache.access.log
+  CustomLog @DRUPAL_LOGS@/@DRUPAL_NAME@_apache.access.log combined
+
+</VirtualHost>

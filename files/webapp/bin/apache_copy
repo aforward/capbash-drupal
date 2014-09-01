@@ -1,0 +1,30 @@
+#!/bin/bash
+FROM_DIR=$1
+DRUPAL_NAME=$2
+DRUPAL_SERVER=$3
+DRUPAL_LOGS=/var/log/apache2
+
+TO_DIR=/data/drupal/$DRUPAL_NAME
+SERVER_CONF_FILENAME=/etc/apache2/sites-enabled/${DRUPAL_NAME}.conf
+
+mkdir -p ${TO_DIR}
+
+echo "COPYING: cp -R ${FROM_DIR}/* ${TO_DIR}/"
+cp -R ${FROM_DIR}/* ${TO_DIR}/
+
+if [[ ! -e ${TO_DIR}/sites/default/settings.php ]]; then
+  cp ${TO_DIR}/sites/default/default.settings.php ${TO_DIR}/sites/default/settings.php
+fi
+
+chmod a+w ${TO_DIR}/sites/default/settings.php
+chmod a+w ${TO_DIR}/sites/default
+
+cp /data/admin_drupal/config/apache_conf $SERVER_CONF_FILENAME
+sed -i "s|@DRUPAL_ROOT@|$TO_DIR|g" $SERVER_CONF_FILENAME
+sed -i "s|@DRUPAL_SERVER@|$DRUPAL_SERVER|g" $SERVER_CONF_FILENAME
+sed -i "s|@DRUPAL_NAME@|$DRUPAL_NAME|g" $SERVER_CONF_FILENAME
+sed -i "s|@DRUPAL_LOGS@|$DRUPAL_LOGS|g" $SERVER_CONF_FILENAME
+
+echo "$DRUPAL_SERVER" > "$TO_DIR/.url"
+
+touch /data/apache_reload

@@ -36,13 +36,26 @@ if [[ ! -e /var/local/apps/admin_drupal/templates/default  ]]; then
 fi
 
 DRUPAL_CONF=/etc/${DRUPAL_SERVER}/sites-enabled/admin_drupal.conf
+CALL_LOG=/var/log/${DRUPAL_SERVER}/admin_drupal.calls.log
 if [[ "$DRUPAL_SERVER" = "apache" ]]; then
   DRUPAL_CONF=/etc/apache2/sites-enabled/admin_drupal.conf
+  CALL_LOG=/var/log/apache2/admin_drupal.calls.log
 fi
 
-sed -i s/@ACCESS_CODE@/${ACCESS_CODE}/g /var/local/apps/admin_drupal/app/models/AccessCode.php
+sed -i "s|@ACCESS_CODE@|${ACCESS_CODE}|g" /var/local/apps/admin_drupal/app/models/AccessCode.php
+sed -i "s|@DRUPAL_SERVER@|${DRUPAL_SERVER}|g" /var/local/apps/admin_drupal/app/models/AccessCode.php
+sed -i "s|@DRUPAL_ADMIN_SERVER@|${DRUPAL_ADMIN_SERVER}|g" /var/local/apps/admin_drupal/app/models/AccessCode.php
+
 cp ./submodules/drupal/files/admin_${DRUPAL_SERVER}_conf $DRUPAL_CONF
 
 sed -i "s|@DRUPAL_ADMIN_SERVER@|$DRUPAL_ADMIN_SERVER|g" $DRUPAL_CONF
 sed -i "s|@APACHE_LOG_DIR@|$APACHE_LOG_DIR|g" $DRUPAL_CONF
 sed -i "s|@NGINX_LOG_DIR@|$NGINX_LOG_DIR|g" $DRUPAL_CONF
+
+if [[ ! -e $CALL_LOG ]]; then
+  touch $CALL_LOG
+  chown root:www-data $CALL_LOG
+  chmod 666 $CALL_LOG
+fi
+
+

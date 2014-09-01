@@ -3,9 +3,9 @@
 class DrupalAdmin
 {
 
-  private static $TEMPLATE_DIR = "/var/local/apps/admin_drupal/templates";
-  private static $BIN = "/var/local/apps/admin_drupal/bin";
-  private static $ROOT = '/var/local/apps/drupal';
+  private static $TEMPLATE_DIR = "/data/admin_drupal/templates";
+  private static $BIN = "/data/admin_drupal/bin";
+  private static $ROOT = '/data/drupal';
 
   //---------------
   // API
@@ -44,27 +44,38 @@ class DrupalAdmin
 
   public static function is_enabled($name)
   {
+    $conf_filename = AccessCode::server_dir() . "/sites-enabled/{$name}";
+    if (AccessCode::webserver() == "apache")
+    {
+      $conf_filename = "${conf_filename}.conf";
+    }
+
     if (self::is_site($name))
     {
-      return file_exists("/etc/nginx/sites-enabled/{$name}");
+      $answer = file_exists($conf_filename);
     }
     else
     {
-      return false;
+      $answer = false;
     }
+
+    AccessCode::log("admin_drupal.calls.log","ENABLED? ($answer): $conf_filename");
+    return $answer;
   }
 
   public static function enable_site($name)
   {
-    $enable = DrupalAdmin::$BIN . "/enable_site";
+    $enable = DrupalAdmin::$BIN . "/" . AccessCode::webserver() . "_enable_site";
     $call = "{$enable} {$name}";
+    AccessCode::log("admin_drupal.calls.log","ENABLE SITE: $call");
     shell_exec($call);
   }
 
   public static function disable_site($name)
   {
-    $disable = DrupalAdmin::$BIN . "/disable_site";
+    $disable = DrupalAdmin::$BIN . "/" . AccessCode::webserver() . "_disable_site";
     $call = "{$disable} {$name}";
+    AccessCode::log("admin_drupal.calls.log","DISABLE SITE: $call");
     shell_exec($call);
   }
 
@@ -133,8 +144,9 @@ class DrupalAdmin
 
   private static function do_copy($from_path, $name, $server)
   {
-    $copy = DrupalAdmin::$BIN . "/copy";
+    $copy = DrupalAdmin::$BIN . "/" . AccessCode::webserver() . "_copy";
     $call = "{$copy} {$from_path} {$name} {$server}";
+    AccessCode::log("admin_drupal.calls.log","COPY SITE: $call");
     shell_exec($call);
     return self::is_site($name);
   }
