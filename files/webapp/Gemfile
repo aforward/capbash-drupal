@@ -1,13 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'sass', '3.2.19'
 gem 'compass'
 gem 'modular-scale', '1.0.6'
 gem 'sassy-math'
 
-
-begin
-  require 'sassy-math'
-  require 'modular-scale'
-rescue Exception => e
-
-end

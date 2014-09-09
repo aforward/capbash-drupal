@@ -2560,9 +2560,9 @@ h6 {
 }
 
 /*=====================================================
-
+ 
   Links & Paragraph styles
-
+  
   ======================================================*/
 /* line 59, ../../../app/sass/_typography.scss */
 p {
@@ -2603,7 +2603,7 @@ a:hover {
 /*=====================================================
 
   Lists
-
+  
  ======================================================*/
 /* line 91, ../../../app/sass/_typography.scss */
 ul, ol {
@@ -7486,4 +7486,68 @@ a:hover {
   padding: 20px;
   border: 1px solid black;
   margin: 5px;
+}
+
+/* line 49, ../../../app/sass/_custom.sass */
+.inline {
+  display: inline;
+}
+
+/* line 52, ../../../app/sass/_custom.sass */
+.site-disabled {
+  background-color: #dadfe1;
+  border: 1px solid #4a4d50;
+}
+/* line 53, ../../../app/sass/_custom.sass */
+.site-disabled h2 {
+  color: #6c7a89;
+}
+
+/* line 58, ../../../app/sass/_custom.sass */
+.site-enabled {
+  background-color: #c5eff7;
+  border: 1px solid #3085d6;
+}
+/* line 59, ../../../app/sass/_custom.sass */
+.site-enabled h2 {
+  color: #34495e;
+}
+
+/* line 65, ../../../app/sass/_custom.sass */
+.btn-disable input {
+  color: #e87e04;
+  border: 1px solid #e87e04;
+  background-color: #fde3a7;
+}
+/* line 69, ../../../app/sass/_custom.sass */
+.btn-disable input:hover {
+  color: #fde3a7;
+  border: 1px solid #fde3a7;
+  background-color: #e87e04;
+}
+
+/* line 76, ../../../app/sass/_custom.sass */
+.btn-enable input {
+  color: #34495e;
+  border: 1px solid #34495e;
+  background-color: #c5eff7;
+}
+/* line 80, ../../../app/sass/_custom.sass */
+.btn-enable input:hover {
+  color: #c5eff7;
+  border: 1px solid #c5eff7;
+  background-color: #34495e;
+}
+
+/* line 86, ../../../app/sass/_custom.sass */
+.btn-delete input {
+  color: #cf000f;
+  border: 1px solid #cf000f;
+  background-color: #f1a9a0;
+}
+/* line 90, ../../../app/sass/_custom.sass */
+.btn-delete input:hover {
+  color: #f1a9a0;
+  border: 1px solid #f1a9a0;
+  background-color: #cf000f;
 }

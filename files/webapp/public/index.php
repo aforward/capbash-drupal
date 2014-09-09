@@ -80,8 +80,12 @@ else
         $GLOBALS["viewables"]['messageType'] = "info";
         $GLOBALS["viewables"]['message'] = "Disabled {$_POST["name"]}";
 
-      }
+      } elseif (isset($_POST["deleteSite"]) && isset($_POST["name"])) {
+        DrupalAdmin::delete_site($_POST["name"]);
+        $GLOBALS["viewables"]['messageType'] = "info";
+        $GLOBALS["viewables"]['message'] = "Deleted {$_POST["name"]}";
 
+      }
     }
 
     $GLOBALS["viewables"]["sites"] = DrupalAdmin::ls();

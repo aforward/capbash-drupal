@@ -79,6 +79,14 @@ class DrupalAdmin
     shell_exec($call);
   }
 
+  public static function delete_site($name)
+  {
+    $delete = DrupalAdmin::$BIN . "/" . AccessCode::webserver() . "_delete_site";
+    $call = "{$delete} {$name}";
+    AccessCode::log("admin_drupal.calls.log","DELETE SITE: $call");
+    shell_exec($call);
+  }
+
   public static function site_url_file($name)
   {
     if (self::is_site($name))

@@ -2,8 +2,9 @@
 <?php foreach ($GLOBALS["viewables"]["locals"]["sites"] as $site) { ?>
   <?php $url = DrupalAdmin::site_url_href($site) ?>
   <?php $is_enabled = DrupalAdmin::is_enabled($site) ?>
+  <?php $site_class = $is_enabled ? "site-enabled" : "site-disabled" ?>
   <div class="item four columns">
-    <div class="drupal-site">
+    <div class="drupal-site <?php echo $site_class ?>">
       <h2><?php echo $site ?></h2>
       <p>
         <?php if ($url == null) { ?>

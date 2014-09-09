@@ -1,10 +1,14 @@
 #!/bin/bash
 DRUPAL_NAME=$1
 
+TO_DIR=/data/drupal/$DRUPAL_NAME
 ENABLED_FILENAME=/etc/nginx/sites-enabled/${DRUPAL_NAME}
 AVAILABLE_FILENAME=/etc/nginx/sites-available/${DRUPAL_NAME}
 
 if [[ -e $ENABLED_FILENAME ]]; then
-  mv $ENABLED_FILENAME $AVAILABLE_FILENAME
-  touch /tmp/nginx_reload
+  rm -f $ENABLED_FILENAME
+  touch /data/nginx_reload
 fi
+
+rm -f $AVAILABLE_FILENAME
+rm -rf $TO_DIR
