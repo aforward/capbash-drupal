@@ -20,7 +20,7 @@ mkdir -p /var/local/apps/admin_drupal/config
 mkdir -p /var/local/apps/admin_drupal/templates
 mkdir -p /var/local/apps/drupal/
 
-cp -R ./submodules/drupal/files/webapp/* /var/local/apps/admin_drupal/
+cp -R ./bits/drupal/files/webapp/* /var/local/apps/admin_drupal/
 chmod -R 775 /var/local/apps/admin_drupal
 chmod -R 775 /var/local/apps/drupal
 chmod -R 775 /var/local/apps/admin_drupal/bin
@@ -46,7 +46,7 @@ sed -i "s|@ACCESS_CODE@|${ACCESS_CODE}|g" /var/local/apps/admin_drupal/app/model
 sed -i "s|@DRUPAL_SERVER@|${DRUPAL_SERVER}|g" /var/local/apps/admin_drupal/app/models/AccessCode.php
 sed -i "s|@DRUPAL_ADMIN_SERVER@|${DRUPAL_ADMIN_SERVER}|g" /var/local/apps/admin_drupal/app/models/AccessCode.php
 
-cp ./submodules/drupal/files/admin_${DRUPAL_SERVER}_conf $DRUPAL_CONF
+cp ./bits/drupal/files/admin_${DRUPAL_SERVER}_conf $DRUPAL_CONF
 
 sed -i "s|@DRUPAL_ADMIN_SERVER@|$DRUPAL_ADMIN_SERVER|g" $DRUPAL_CONF
 sed -i "s|@APACHE_LOG_DIR@|$APACHE_LOG_DIR|g" $DRUPAL_CONF

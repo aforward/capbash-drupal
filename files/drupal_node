@@ -1,4 +1,4 @@
 #!/bin/bash
-./submodules/docker/install
-./submodules/nginx/install
-./submodules/drupal/install
+./bits/docker/install
+./bits/nginx/install
+./bits/drupal/install
